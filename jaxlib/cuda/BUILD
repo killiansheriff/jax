@@ -402,6 +402,7 @@ pybind_extension(
         "//jaxlib:kernel_pybind11_helpers",
         "//jaxlib/gpu:triton_cc_proto",
         "@xla//xla/service:custom_call_status",
+        "@xla//xla/service:custom_call_target_registry",
         "@xla//xla/stream_executor/cuda:cudart_stub",
         "@xla//xla/stream_executor/gpu:asm_compiler",
         "@com_google_absl//absl/base",

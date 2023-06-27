@@ -30,6 +30,7 @@
 #include "jaxlib/kernel_pybind11_helpers.h"
 #include "pybind11_abseil/status_casters.h"  // IWYU pragma: keep
 #include "xla/service/custom_call_status.h"
+#include "xla/service/custom_call_target_registry.h"
 #include "xla/stream_executor/gpu/asm_compiler.h"
 
 #define CUDA_RETURN_IF_ERROR(expr) JAX_RETURN_IF_ERROR(JAX_AS_STATUS(expr))
@@ -605,6 +606,9 @@ void LaunchTritonKernel(CUstream stream, void** buffers, const char* opaque,
     XlaCustomCallStatusSetFailure(status, msg.data(), msg.length());
   }
 }
+
+XLA_REGISTER_CUSTOM_CALL_TARGET_WITH_SYM("triton_kernel_call",
+                                         &LaunchTritonKernel, "CUDA");
 
 PYBIND11_MODULE(_triton, m) {
   py::class_<Kernel>(m, "TritonKernel")
